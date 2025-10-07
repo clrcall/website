@@ -1,0 +1,148 @@
+:root {
+    --mono: monospace;
+    --accent: #ff003c;
+    --text: #f2f2f2;
+    --dim: #999;
+    --bg: #000;
+}
+
+::selection {
+    background-color: var(--accent);
+    color: #000;
+}
+
+html {
+    height: 100%;
+    background: var(--bg) url(/media/bg.png) no-repeat fixed center;
+    background-size: cover;
+    color: var(--text);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scrollbar-color: var(--accent) #000;
+}
+
+body {
+    position: relative;
+    font-family: var(--mono);
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    background-color: #000;
+    text-shadow: 0 0 1px #fff1;
+}
+
+.main {
+    position: absolute;
+    top: 0;
+    left: 40px;
+    width: 750px;
+    padding: 24px;
+    background: #000;
+    border-left: 1px solid var(--accent);
+    border-right: 1px solid #111;
+}
+
+.navigate {
+    border: 1px solid var(--accent);
+    background: #070707;
+    color: var(--text);
+    font-size: 15px;
+    text-align: center;
+    padding: 8px;
+    letter-spacing: 0.03em;
+    text-transform: lowercase;
+    margin-bottom: 18px;
+}
+
+.navigate a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.navigate a:hover {
+    color: var(--text);
+}
+
+p {
+    width: 740px;
+    line-height: 21px;
+    margin: 12px 0;
+    padding: 2px 0;
+}
+
+i {
+    color: var(--dim);
+}
+
+b {
+    color: var(--accent);
+    text-shadow: 0 0 3px var(--accent);
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--text);
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--accent);
+    opacity: 0.4;
+    margin: 22px 0;
+}
+
+.jp {
+    font-family: "MS Gothic", "Noto Sans JP", sans-serif;
+}
+
+.main ul {
+    list-style: none;
+    margin: 0 0 20px 0;
+    padding: 0;
+    line-height: 21px;
+}
+
+.main ul li::before {
+    content: ">";
+    color: var(--accent);
+    margin-right: 6px;
+}
+
+
+a, summary, .navigate {
+    cursor: crosshair;
+}
+
+summary {
+    font-weight: bold;
+    letter-spacing: -0.02em;
+}
+
+summary:hover {
+    color: var(--accent);
+}
+
+#discordStatus, #spotifyStatus {
+    color: #f2f2f2;
+    font-family: var(--mono);
+    font-size: 14px;
+    line-height: 1.4em;
+    margin: 8px 0;
+}
+
+#discordStatus i, #spotifyStatus i {
+    color: var(--dim);
+}
+
+#discordStatus b, #spotifyStatus b {
+    color: var(--accent);
+}
+
+#spotifyStatus::before {
+    color: var(--accent);
+}
+

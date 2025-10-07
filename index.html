@@ -1,0 +1,93 @@
+<!--
+    I know you are here, do not copy my website, twin.
+    I will find you, and I will kill you.
+    Jk, go ahead, I hope it is useful! :D
+                                           - Sen
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="robots" content="noarchive">
+    <title>sen.wtf</title>
+    <link rel="stylesheet" href="/styles/site.css">
+    <link rel="icon" type="image/x-icon" href="/media/xd.gif">
+    <style>
+        .navigate {
+            margin-bottom: 18px;
+        }
+    </style>
+</head>
+<script>
+    const CONFIG = { discordUserId: '374589381752913930' };
+
+    let ws, heartbeat;
+
+    function connectLanyard() {
+        ws = new WebSocket('wss://api.lanyard.rest/socket');
+        ws.onopen = () => {
+            ws.send(JSON.stringify({ op: 2, d: { subscribe_to_id: CONFIG.discordUserId } }));
+        };
+
+        ws.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            if (data.op === 1) {
+                heartbeat = setInterval(() => ws.send(JSON.stringify({ op: 3 })), data.d.heartbeat_interval);
+            } else if (data.op === 0) {
+                updateStatus(data.d);
+            }
+        };
+
+        ws.onclose = () => {
+            clearInterval(heartbeat);
+            setTimeout(connectLanyard, 3000);
+        };
+    }
+
+    function updateStatus(presence) {
+        const discordEl = document.getElementById("discordStatus");
+        const spotifyEl = document.getElementById("spotifyStatus");
+
+        const statusMap = {
+            online: "online",
+            idle: "idle",
+            dnd: "busy",
+            offline: "offline"
+        };
+
+        const status = statusMap[presence.discord_status] || "offline";
+        discordEl.innerHTML = `I am currently <b>${status}</b>.`;
+
+        if (presence.spotify) {
+            const s = presence.spotify;
+            spotifyEl.innerHTML = `♪ <b>${s.song}</b> — ${s.artist}`;
+        } else {
+            spotifyEl.innerHTML = `<i>not listening to anything</i>`;
+        }
+    }
+
+    connectLanyard();
+</script>
+
+<body>
+    <div class="main">
+        <div class="navigate">
+            <a href="/index.html">home</a> / <a href="/about.html">about</a> / <a href="/blog.html">blog</a> / <a
+                href="/other.html">other</a>
+        </div>
+        <!---navend-->
+        <img src="/media/banner.png" style="pointer-events: none;">
+        <p style="margin-top: 10px;">welcome to my personal website, my name is <strong>sen</strong><br>here are my <a
+                href="https://discord.com/users/374589381752913930">discord</a>, <a
+                href="https://steamcommunity.com/profiles/76561198884824734/">steam</a> and <a
+                href="https://www.last.fm/user/senkiro">last.fm</a></p>
+        <div id="discordStatus" class="loading">connecting to discord...</div>
+        <div id="spotifyStatus" class="loading">connecting to spotify...</div>
+        <hr>
+        <p style="margin-bottom: 0;">&copy; 2022-2025 sen.wtf<br>hosted on <b>github</b></p>
+    </div>
+</body>
+
+</html>
